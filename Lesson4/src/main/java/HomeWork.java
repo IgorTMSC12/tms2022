@@ -45,33 +45,12 @@ public class HomeWork {
     }
 
     public static void task2() {
-        int ameba = 0;
-        while (ameba <= 24) {
-            if (ameba == 3) {
-                System.out.println("Через 3 часа одноклеточная амёба разделилась на 2 одноклеточные амёбы");
+        int ameb = 1;
+        for (int i = 0; i <= 24; i += 3) {
+            if (i > 0) {
+                ameb = ameb * 2;
+                System.out.println("Через " + i + " часа (часов, час) амёба разделилась на " + ameb + " амёб (амёбы)");
             }
-            if (ameba == 6) {
-                System.out.println("Через 6 часов 2-е одноклеточные амёбы разделились на 4 одноклеточных амёб");
-            }
-            if (ameba == 9) {
-                System.out.println("Через 9 часов 4 одноклеточные амёбы разделились на 8 одноклеточных амёб");
-            }
-            if (ameba == 12) {
-                System.out.println("Через 12 часов 8 одноклеточных амёб разделились на 16 одноклеточных амёб");
-            }
-            if (ameba == 15) {
-                System.out.println("Через 15 часов 16 одноклеточных амёб разделились на 32 одноклеточных амёб");
-            }
-            if (ameba == 18) {
-                System.out.println("Через 18 часов 32 одноклеточные амёбы разделились на 64 одноклеточных амёб");
-            }
-            if (ameba == 21) {
-                System.out.println("Через 21 час 64 одноклеточные амёбы разделились на 128 одноклеточных амёб");
-            }
-            if (ameba == 24) {
-                System.out.println("Через 24 часа 128 одноклеточных амёб разделились на 256 одноклеточных амёб");
-            }
-            ameba = ameba + 3;
         }
     }
 
@@ -86,7 +65,15 @@ public class HomeWork {
         } else {
             System.out.println("Введённое число " + values + " является ни положительным, ни отрицательным");
         }
-    } // Найти колличество цифр.
+        int numbers;
+        int x = 0;
+        do {
+            values = Math.abs(values) / 10;
+            numbers = values;
+            x = x + 1;
+        } while (!(numbers < 1));
+        System.out.println("Колисество цифр в числе: " + x);
+    }
 
     public static void task4() {
         Scanner scanner2 = new Scanner(System.in);
@@ -95,7 +82,7 @@ public class HomeWork {
         int number_day = scanner2.nextInt();
         System.out.println("Введите число Вашего месяца вашего дня рождения");
         int number_moth = scanner3.nextInt();
-        if (number_day <= 31 && number_moth <= 12) {
+        if (number_day <= 31 && number_moth <= 12 && number_day > 0 && number_moth > 0) {
             switch (number_moth) {
                 case 1:
                     if (number_day >= 21) {
@@ -187,41 +174,36 @@ public class HomeWork {
             task4();
         }
     }
-    // Ещё можно написать условие на то, что если пользователь введёт десятичное число.
 
     public static void printArray() {
         Scanner scanner3 = new Scanner(System.in);
         System.out.println("Введите целое положительное число");
         int number = scanner3.nextInt();
-        if (number < 0) {
-            System.out.println("Ошибка: необходимо ввести положительное число. Попробуйте ещё раз");
-            printArray();
-        } else {
+        if (number > 0) {
             byte[] massif = new byte[number];
             Random random = new Random();
             random.nextBytes(massif);
             System.out.println(Arrays.toString(massif));
+        } else {
+            System.out.println("Ошибка: необходимо ввести положительное число. Попробуйте ещё раз");
+            printArray();
         }
     }
 
     public static int operation(int number) {
         if (number > 0) {
             number = number + 1;
-            return number;
         } else if (number < 0) {
             number = number - 2;
-            return number;
         } else if (number == 0) {
             number = 10;
-            return number;
         }
-        return 0;
+        return number;
     }
 
     public static int calculateCountOfOddElementsInMatrix(int[] ints) {
         int count = 0;
-        int i;
-        for (i = 0; i < ints.length; i++) {
+        for (int i = 0; i < ints.length; i++) {
             if (ints[i] % 2 > 0) {
                 count = count + 1;
             }
@@ -232,11 +214,12 @@ public class HomeWork {
     public static void countDevs(int count) {
         if (count % 10 == 1 && !(count % 100 == 11)) {
             System.out.println(count + " программист");
-        } else if (count % 10 == 2 || count % 10 == 3 || count % 10 == 4) {
-            if (count % 100 == 12 || count % 100 == 13 || count % 100 == 14) {
+        } else if (count % 10 >= 2 && count % 10 <= 4) {
+            if (count % 100 >= 12 && count % 100 <= 14) {
                 System.out.println(count + " программистов");
+            } else {
+                System.out.println(count + " программиста");
             }
-            System.out.println(count + " программиста");
         } else {
             System.out.println(count + " программистов");
         }
@@ -253,12 +236,20 @@ public class HomeWork {
     }
 
     public static void printPrimeNumbers() {
-        int number;
-        for (number = 0; number <= 1000; number++) {
-            if (!(number % 2 == 0 || number % 3 == 0 || number % 5 == 0)) {
-                System.out.println(number);
-            } else if (number == 2 || number == 3 || number == 5) {
-                System.out.println(number);
+        int a = 0;
+        while (a < 1000) {
+            a = a + 1;
+            int b = 0;
+            int x = 0;
+            while (b < 1000) {
+                b = b + 1;
+                int c = a % b;
+                if (c == 0) {
+                    x = x + 1;
+                }
+            }
+            if (x <= 2) {
+                System.out.println(a);
             }
         }
     }
