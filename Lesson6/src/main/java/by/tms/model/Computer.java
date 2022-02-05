@@ -8,7 +8,7 @@ public class Computer {
     private String ram;
     private String hd;
     private int count = 4;
-    private boolean sost = true;
+    private boolean burned = false;
 
     public Computer(String cpu, String ram, String hd) {
         this.cpu = cpu;
@@ -21,7 +21,7 @@ public class Computer {
     }
 
     public void on() {
-        if (sost == true) {
+        if (burned == false || count != 0) {
             System.out.println("Внимание! Введите 0 или 1");
             Random random = new Random();
             int a = random.nextInt(2);
@@ -31,7 +31,7 @@ public class Computer {
                 off();
             } else {
                 System.out.println("Компьютер сгорел");
-                sost = false;
+                burned = true;
             }
         } else {
             System.out.println("Компьютер сгорел");
@@ -43,9 +43,9 @@ public class Computer {
     public void off() {
         if (count == 0) {
             System.out.println("Компьютер сгорел");
-            sost = false;
+            burned = true;
         }
-        if (sost == true) {
+        if (burned == false) {
             System.out.println("Компьютер выключается");
             count--;
             on();
