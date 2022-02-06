@@ -1,6 +1,6 @@
 public class Adress {
-    String country;
-    String town;
+    private String country;
+    private String town;
 
     public Adress(String country, String town) {
         this.country = country;

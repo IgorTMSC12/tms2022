@@ -1,5 +1,5 @@
 public class MilitaryOffice {
-    PersonRegistry personRegistry;
+    private PersonRegistry personRegistry;
 
     public MilitaryOffice(PersonRegistry personRegistry) {
         this.personRegistry = personRegistry;
@@ -31,7 +31,7 @@ public class MilitaryOffice {
         int count = 0;
         for (int i = 0; i < personRegistry.getPeople().length; i++) {
             Person person = personRegistry.getPeople()[i];
-            if (person.getAge() <= 27 && person.getSex() == Person.MALE) {
+            if (person.getAge() <= 27 && person.getSex().equals(person.MALE)) {
                 count++;
             }
         }
