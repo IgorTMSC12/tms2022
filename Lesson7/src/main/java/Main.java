@@ -21,13 +21,13 @@ public class Main {
         Person person6 = new Person(adressperson6, "Alexander", 26, Person.MALE);
 
         Person[] people = new Person[]{person1, person2, person3, person4, person5, person6};
-        PersonRegistry asd = new PersonRegistry(people);
-        MilitaryOffice afs = new MilitaryOffice(asd);
+        PersonRegistry personRegistry = new PersonRegistry(people);
+        MilitaryOffice militaryOffice = new MilitaryOffice(personRegistry);
 
-        System.out.println(Arrays.toString(afs.findBy()));
-        System.out.println("Количество годных призывников в городе Минске: " + afs.findByTown("Minsk"));
-        System.out.println("Количество призывников от 25 до 27 лет: " + afs.findByAge());
-        System.out.println("Количество призывников у которых имя Александр: " + afs.findByName("Alexander"));
+        System.out.println(Arrays.toString(militaryOffice.findBy()));
+        System.out.println("Количество годных призывников в городе Минске: " + militaryOffice.findByTown("Minsk"));
+        System.out.println("Количество призывников от 25 до 27 лет: " + militaryOffice.findByAge());
+        System.out.println("Количество призывников у которых имя Александр: " + militaryOffice.findByName("Alexander"));
     }
 
 
