@@ -1,5 +1,8 @@
 package tms.reader;
 
+import lombok.ToString;
+
+@ToString
 public class Book {
     private String nameBook;
     private String authorBook;
@@ -9,11 +12,4 @@ public class Book {
         this.authorBook = authorBook;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "nameBook='" + nameBook + '\'' +
-                ", authorBook='" + authorBook + '\'' +
-                '}';
-    }
 }

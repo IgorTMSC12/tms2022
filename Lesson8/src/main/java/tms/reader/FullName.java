@@ -1,5 +1,8 @@
 package tms.reader;
 
+import lombok.ToString;
+
+@ToString
 public class FullName {
     private String name;
     private String lastname;
@@ -12,12 +15,4 @@ public class FullName {
         this.surname = surname;
     }
 
-    @Override
-    public String toString() {
-        return "FullName{" +
-                "name='" + name + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", surname='" + surname + '\'' +
-                '}';
-    }
 }

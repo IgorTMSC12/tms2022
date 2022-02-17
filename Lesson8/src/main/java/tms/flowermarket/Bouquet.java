@@ -1,9 +1,9 @@
 package tms.flowermarket;
 
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 
-import java.util.Arrays;
-
+@ToString
 @AllArgsConstructor
 public class Bouquet {
     private Flower[] flower;
@@ -16,11 +16,4 @@ public class Bouquet {
         return summ;
     }
 
-    @Override
-    public String toString() {
-        return "Bouquet{" +
-                "priceBouquet=" + summPrice(flower) +
-                " flowers=" + Arrays.toString(flower) +
-                '}';
-    }
 }

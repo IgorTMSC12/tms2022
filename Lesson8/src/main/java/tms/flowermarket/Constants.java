@@ -1,5 +1,8 @@
 package tms.flowermarket;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class Constants {
     public static final String ROSE = "Розы";
     public static final String LILY = "Лилии";

@@ -1,5 +1,8 @@
 package tms.reader;
 
+import lombok.ToString;
+
+@ToString
 public class Birthday {
     private int day;
     private String moth;
@@ -11,12 +14,4 @@ public class Birthday {
         this.year = year;
     }
 
-    @Override
-    public String toString() {
-        return "Birthday{" +
-                "fay=" + day +
-                ", moth='" + moth + '\'' +
-                ", year=" + year +
-                '}';
-    }
 }
