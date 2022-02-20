@@ -9,7 +9,6 @@ public class Main {
         System.out.println();
 
         SpaceX spaceX = new SpaceX();
-        Spaceport spaceport1 = new Spaceport();
-        spaceport1.start(spaceX);
+        spaceport.start(spaceX);
     }
 }
