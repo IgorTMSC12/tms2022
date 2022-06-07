@@ -13,12 +13,12 @@
 <jsp:include page="menu.jsp"/>
 <div style="text-align: center;"><h4>Корзина</h4></div>
 <div class="container-fluid">
-    <c:if test="${not empty products}">
-        <c:forEach items="${products}" var="product">
+    <c:if test="${not empty cart.getProducts()}">
+        <c:forEach items="${cart.getProducts()}" var="product">
             <div class="card-body">
                 <div class="row">
                     <div class="col-1">
-                        <a href="/product?productName=${product.getName()}">
+                        <a href="/product?productId=${product.getId()}">
                             <img style="width:100%;height:100%"
                                  src="${contextPath}/images/image_product/${product.getImageName()}"
                                  alt="${product.getImageName()}"></a>
@@ -29,7 +29,7 @@
                         <b>Цена:</b> ${product.getPrice()} руб.
                     </div>
                     <div class="col-1">
-                        <form method="post" action="/cart?productName=${product.getName()}">
+                        <form method="post" action="/cart?productId=${product.getId()}">
                             <button type="submit" class="btn btn-secondary btn-sm"><h4>Удалить</h4></button>
                         </form>
                     </div>
@@ -39,8 +39,8 @@
         <div class="row">
             <div class="col">
                 <h5>К оформлению:</h5><br>
-                Количество товаров: ${countProducts}<br>
-                Общая сумма: ${priceProducts} рублей.
+                Количество товаров: ${cart.getProductsCount()}<br>
+                Общая сумма: ${cart.getProductsPrice()} рублей.
             </div>
         </div>
         <div class="row">

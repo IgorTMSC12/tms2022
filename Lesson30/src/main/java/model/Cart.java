@@ -6,21 +6,21 @@ import java.util.List;
 public class Cart {
 
     private List<Product> products;
-    private int priceProducts;
-    private int countProducts;
+    private int productsPrice;
+    private int productsCount;
 
     public Cart() {
         this.products = new ArrayList<>();
-        priceProducts = 0;
-        countProducts = 0;
+        productsPrice = 0;
+        productsCount = 0;
     }
 
-    public int getPriceProducts() {
-        return priceProducts;
+    public int getProductsPrice() {
+        return productsPrice;
     }
 
-    public int getCountProducts() {
-        return countProducts;
+    public int getProductsCount() {
+        return productsCount;
     }
 
     public List<Product> getProducts() {
@@ -29,23 +29,23 @@ public class Cart {
 
     public void addProduct(Product product) {
         products.add(product);
-        countProducts++;
-        priceProducts = priceProducts + product.getPrice();
+        productsCount++;
+        productsPrice = productsPrice + product.getPrice();
     }
 
     public void removeProduct(Product product) {
         for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getName().equals(product.getName())) {
+            if (products.get(i).getId() == (product.getId())) {
                 products.remove(i);
-                countProducts--;
-                priceProducts = priceProducts - product.getPrice();
+                productsCount--;
+                productsPrice = productsPrice - product.getPrice();
             }
         }
     }
 
     public void clear() {
         products.clear();
-        countProducts = 0;
-        priceProducts = 0;
+        productsCount = 0;
+        productsPrice = 0;
     }
 }

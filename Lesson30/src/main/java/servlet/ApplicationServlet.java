@@ -49,7 +49,7 @@ public class ApplicationServlet extends HttpServlet {
         if (StorageUser.checkUser(request.getParameter("useremail"), request.getParameter("password"))) {
             request.getSession().setAttribute("username", user);
 
-            List<Category> categories = StorageCategory.getCategories();
+            List<Category> categories = StorageCategory.createCategory();
             request.setAttribute("categories", categories);
 
             Cart cart = new Cart();

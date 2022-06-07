@@ -14,12 +14,12 @@ public class Category {
         this.imageName = imageName;
     }
 
-    public int getId() {
+    public int getIdCategory() {
         return idCategory;
     }
 
-    public void setId(int id) {
-        this.idCategory = id;
+    public void setIdCategory(int idCategory) {
+        this.idCategory = idCategory;
     }
 
     public String getName() {

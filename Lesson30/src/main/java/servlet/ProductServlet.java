@@ -18,8 +18,8 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("productName");
-        Product product = StorageProducts.getProduct(name);
+        int id = Integer.parseInt(req.getParameter("productId"));
+        Product product = StorageProducts.getProductById(id);
         req.setAttribute("product", product);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("product.jsp");
         requestDispatcher.forward(req, resp);
@@ -29,8 +29,8 @@ public class ProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
-        String name = req.getParameter("productName");
-        Product product = StorageProducts.getProduct(name);
+        int id = Integer.parseInt(req.getParameter("productId"));
+        Product product = StorageProducts.getProductById(id);
         cart.addProduct(product);
         session.setAttribute("cart", cart);
         doGet(req, resp);

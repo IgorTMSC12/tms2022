@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
@@ -21,14 +20,7 @@ public class CartServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
-        List<Product> products = cart.getProducts();
-        req.setAttribute("products", products);
-
-        int countProducts = cart.getCountProducts();
-        int priceProducts = cart.getPriceProducts();
-
-        req.setAttribute("countProducts", countProducts);
-        req.setAttribute("priceProducts", priceProducts);
+        req.setAttribute("cart", cart);
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("cart.jsp");
         requestDispatcher.forward(req, resp);
@@ -36,8 +28,8 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("productName");
-        Product product = StorageProducts.getProduct(name);
+        int id = Integer.parseInt(req.getParameter("productId"));
+        Product product = StorageProducts.getProductById(id);
         HttpSession session = req.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
         cart.removeProduct(product);

@@ -19,8 +19,8 @@ public class CategoryServlet extends HttpServlet {
         String name = req.getParameter("categoryName");
         req.setAttribute("name", name);
 
-        int id = Integer.parseInt(req.getParameter("categoryId"));
-        List<Product> products = StorageProducts.getProductById(id);
+        int idCategory = Integer.parseInt(req.getParameter("categoryId"));
+        List<Product> products = StorageProducts.getProductByIdCategory(idCategory);
         req.setAttribute("products", products);
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("category.jsp");
