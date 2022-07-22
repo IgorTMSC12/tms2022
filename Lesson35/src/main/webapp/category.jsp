@@ -13,15 +13,15 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <jsp:include page="menu.jsp"/>
 <br>
-${name}
+${category.getName()}
 <div class="container-fluid">
-    <c:if test="${not empty products}">
-        <c:forEach items="${products}" var="product">
+    <c:if test="${not empty category.getProducts()}">
+        <c:forEach items="${category.getProducts()}" var="product">
             <div class="card-body">
                 <div class="row">
                     <div class="col-1">
                         <c:forEach items="${images}" var="image">
-                            <c:if test="${product.getId() == image.getIdProduct()}">
+                            <c:if test="${product.getId() == image.getProductId()}">
                                 <a href="/eshop?command=product-redirect&productId=${product.getId()}">
                                     <img style="width:100%;height:100%"
                                          src="${contextPath}/images/image_product/${image.getImagePath()}"

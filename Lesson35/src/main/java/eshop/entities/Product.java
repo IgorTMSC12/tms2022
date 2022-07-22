@@ -5,25 +5,25 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Product extends BaseEntity {
 
-    private int idCategory;
+    private int categoryId;
     private String name;
     private String description;
     private int price;
 
-    public Product(int id, int idCategory, String name, String description, int price) {
+    public Product(int id, int categoryId, String name, String description, int price) {
         super(id);
-        this.idCategory = idCategory;
+        this.categoryId = categoryId;
         this.name = name;
         this.description = description;
         this.price = price;
     }
 
-    public int getIdCategory() {
-        return idCategory;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setIdCategory(int idCategory) {
-        this.idCategory = idCategory;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getName() {

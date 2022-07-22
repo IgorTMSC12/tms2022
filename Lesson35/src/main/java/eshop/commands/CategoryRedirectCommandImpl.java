@@ -1,6 +1,7 @@
 package eshop.commands;
 
 import eshop.PagesPathEnum;
+import eshop.entities.Category;
 import eshop.entities.Image;
 import eshop.entities.Product;
 import eshop.exceptions.CommandException;
@@ -17,12 +18,12 @@ public class CategoryRedirectCommandImpl implements BaseCommand {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String name = request.getParameter("categoryName");
-        int idCategory = Integer.parseInt(request.getParameter("categoryId"));
-        List<Product> products = productRepository.getProductsByIdCategory(idCategory);
-        List<Image> images = imageRepository.getImagesProductsByCategory(idCategory);
-        request.setAttribute("products", products);
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        List<Product> products = productRepository.getProductsByIdCategory(categoryId);
+        Category category = Category.builder().id(categoryId).name(name).products(products).build();
+        List<Image> images = imageRepository.getImagesProductsByCategory(categoryId);
+        request.setAttribute("category", category);
         request.setAttribute("images", images);
-        request.setAttribute("name", name);
         return PagesPathEnum.CATEGORY_PAGE.getPath();
     }
 }

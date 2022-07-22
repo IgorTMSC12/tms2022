@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <a>${category.getName()}</a>
                         <c:forEach items="${imageCategories}" var="imageCategory">
-                            <c:if test="${category.getId() == imageCategory.getIdCategory()}">
+                            <c:if test="${category.getId() == imageCategory.getCategoryId()}">
                                 <a href="/eshop?command=category-redirect&categoryId=${category.getId()}&categoryName=${category.getName()}">
                                     <img class="card-img" style="width:150px;height:120px"
                                          src="${contextPath}/images/${imageCategory.getImagePath()}"

@@ -8,6 +8,7 @@ import eshop.util.ConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +32,14 @@ public class CategoryRepositoryImpl implements CategoryRepository {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 double rating = resultSet.getDouble("rating");
-                Category category = new Category(id, name, rating);
+                Category category = Category.builder().id(id).name(name).rating(rating).build();
                 categories.add(category);
             }
             connectionPool.closeConnection(connection);
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
         } catch (Exception exception) {
-            exception.printStackTrace();
+            throw new RuntimeException();
         }
         return categories;
     }

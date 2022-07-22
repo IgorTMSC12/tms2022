@@ -61,7 +61,14 @@ public class UserRepositoryImpl implements UserRepository {
                 String lastname = resultSet.getString("lastname");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                user = new User(id, name, lastname, email, password);
+                user = User.builder()
+                        .id(id)
+                        .name(name)
+                        .lastName(lastname)
+                        .email(email)
+                        .password(password)
+                        .build();
+
             }
             connectionPool.closeConnection(connection);
         } catch (Exception exception) {

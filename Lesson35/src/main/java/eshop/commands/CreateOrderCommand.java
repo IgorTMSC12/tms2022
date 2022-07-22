@@ -31,7 +31,12 @@ public class CreateOrderCommand implements BaseCommand {
             products.add(product);
         }
         LocalDate date = LocalDate.now();
-        Order order = new Order(user.getId(), cart.getProductsPrice(), date, products);
+        Order order = Order.builder()
+                .id(user.getId())
+                .orderPrice(cart.getProductsPrice())
+                .orderData(date)
+                .products(products)
+                .build();
         orderRepository.create(order);
         cart.clear();
         session.setAttribute("cart", cart);

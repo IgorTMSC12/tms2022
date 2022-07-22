@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderRepositoryImpl implements OrderRepository {
-    private static final String INSERT_NEW_ORDER = "INSERT INTO eshop_db.orders (id_user, price_order, date) value (?,?,?)";
-    private static final String INSERT_NEW_ORDER_PRODUCT = "INSERT INTO eshop_db.order_products (id_order, id_product) value (?,?)";
-    private static final String GET_ORDERS_BY_ID_USER = "SELECT * FROM eshop_db.orders WHERE id_user=?";
-    private static final String GET_PRODUCTS_BY_ID_ORDER = "SELECT * FROM eshop_db.order_products WHERE id_order=?";
+    private static final String INSERT_NEW_ORDER = "INSERT INTO eshop_db.orders (user_id, order_price, date) value (?,?,?)";
+    private static final String INSERT_NEW_ORDER_PRODUCT = "INSERT INTO eshop_db.order_products (order_id, product_id) value (?,?)";
+    private static final String GET_ORDERS_BY_ID_USER = "SELECT * FROM eshop_db.orders WHERE user_id=?";
+    private static final String GET_PRODUCTS_BY_ID_ORDER = "SELECT * FROM eshop_db.order_products WHERE order_id=?";
 
     @Override
     public void create(Order entity) {
@@ -24,12 +24,12 @@ public class OrderRepositoryImpl implements OrderRepository {
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_ORDER);
-            preparedStatement.setInt(1, entity.getIdUser());
-            preparedStatement.setInt(2, entity.getPriceOrder());
-            preparedStatement.setObject(3, entity.getDataOrder());
+            preparedStatement.setInt(1, entity.getUserId());
+            preparedStatement.setInt(2, entity.getOrderPrice());
+            preparedStatement.setObject(3, entity.getOrderData());
             preparedStatement.executeUpdate();
             for (int i = 0; i < entity.getProducts().size(); i++) {
-                createOrderProduct(getOrderByIdUser(entity.getIdUser()).getId(), entity.getProducts().get(i).getId());
+                createOrderProduct(getOrderByIdUser(entity.getUserId()).getId(), entity.getProducts().get(i).getId());
             }
             connectionPool.closeConnection(connection);
         } catch (Exception exception) {
@@ -52,13 +52,13 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     }
 
-    public void createOrderProduct(int idOrder, int idProduct) {
+    public void createOrderProduct(int orderId, int productId) {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_ORDER_PRODUCT);
-            preparedStatement.setInt(1, idOrder);
-            preparedStatement.setInt(2, idProduct);
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.setInt(2, productId);
             preparedStatement.executeUpdate();
             connectionPool.closeConnection(connection);
         } catch (Exception exception) {
@@ -68,20 +68,26 @@ public class OrderRepositoryImpl implements OrderRepository {
 
 
     @Override
-    public Order getOrderByIdUser(int idUser) {
+    public Order getOrderByIdUser(int userId) {
         Order order = null;
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(GET_ORDERS_BY_ID_USER);
-            preparedStatement.setInt(1, idUser);
+            preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int idOrder = resultSet.getInt("id");
-                int priceOrder = resultSet.getInt("price_order");
+                int orderId = resultSet.getInt("id");
+                int orderPrice = resultSet.getInt("order_price");
                 LocalDate date = resultSet.getDate("date").toLocalDate();
-                List<Product> products = getProductsByIdOrder(idOrder);
-                order = new Order(idOrder, idUser, priceOrder, date, products);
+                List<Product> products = getProductsByIdOrder(orderId);
+                order = Order.builder()
+                        .id(orderId)
+                        .userId(userId)
+                        .orderPrice(orderPrice)
+                        .orderData(date)
+                        .products(products)
+                        .build();
             }
             connectionPool.closeConnection(connection);
         } catch (Exception exception) {
@@ -92,20 +98,26 @@ public class OrderRepositoryImpl implements OrderRepository {
 
 
     @Override
-    public List<Order> getOrdersByIdUser(int idUser) {
+    public List<Order> getOrdersByIdUser(int userId) {
         List<Order> orders = new ArrayList<>();
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(GET_ORDERS_BY_ID_USER);
-            preparedStatement.setInt(1, idUser);
+            preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int idOrder = resultSet.getInt("id");
-                int priceOrder = resultSet.getInt("price_order");
+                int orderId = resultSet.getInt("id");
+                int orderPrice = resultSet.getInt("order_price");
                 LocalDate date = resultSet.getDate("date").toLocalDate();
-                List<Product> products = getProductsByIdOrder(idOrder);
-                Order order = new Order(idOrder, idUser, priceOrder, date, products);
+                List<Product> products = getProductsByIdOrder(orderId);
+                Order order = Order.builder()
+                        .id(orderId)
+                        .userId(userId)
+                        .orderPrice(orderPrice)
+                        .orderData(date)
+                        .products(products)
+                        .build();
                 orders.add(order);
             }
             connectionPool.closeConnection(connection);
@@ -115,17 +127,17 @@ public class OrderRepositoryImpl implements OrderRepository {
         return orders;
     }
 
-    public List<Product> getProductsByIdOrder(int idOrder) {
+    public List<Product> getProductsByIdOrder(int orderId) {
         List<Product> products = new ArrayList<>();
         ProductRepositoryImpl productRepositoryImp = new ProductRepositoryImpl();
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCTS_BY_ID_ORDER);
-            preparedStatement.setInt(1, idOrder);
+            preparedStatement.setInt(1, orderId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Product product = productRepositoryImp.getProductById(resultSet.getInt("id_product"));
+                Product product = productRepositoryImp.getProductById(resultSet.getInt("product_id"));
                 products.add(product);
             }
             connectionPool.closeConnection(connection);

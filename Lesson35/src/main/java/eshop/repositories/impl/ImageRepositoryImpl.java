@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageRepositoryImpl implements ImageRepository {
-    private static final String GET_ALL_IMAGES_CATEGORIES = "SELECT * FROM eshop_db.images WHERE id_product IS NULL";
-    private static final String GET_ALL_IMAGES_BY_ID_CATEGORY = "SELECT * FROM eshop_db.images WHERE id_category=? AND id_product IS NOT NULL";
-    private static final String GET_IMAGE_BY_ID_PRODUCT = "SELECT * FROM eshop_db.images WHERE id_product=?";
+    private static final String GET_ALL_IMAGES_CATEGORIES = "SELECT * FROM eshop_db.images WHERE product_id IS NULL";
+    private static final String GET_ALL_IMAGES_BY_ID_CATEGORY = "SELECT * FROM eshop_db.images WHERE category_id=? AND product_id IS NOT NULL";
+    private static final String GET_IMAGE_BY_ID_PRODUCT = "SELECT * FROM eshop_db.images WHERE product_id=?";
 
     @Override
     public void create(Image entity) {
@@ -45,10 +45,10 @@ public class ImageRepositoryImpl implements ImageRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_IMAGES_CATEGORIES);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int idCategory = resultSet.getInt("id_category");
-                int idProduct = resultSet.getInt("id_product");
+                int categoryId = resultSet.getInt("category_id");
+                int productId = resultSet.getInt("product_id");
                 String imagePath = resultSet.getString("image_path");
-                Image image = new Image(idCategory, idProduct, imagePath);
+                Image image = new Image(categoryId, productId, imagePath);
                 categoryImage.add(image);
             }
             connectionPool.closeConnection(connection);
@@ -68,10 +68,9 @@ public class ImageRepositoryImpl implements ImageRepository {
             preparedStatement.setInt(1, categoryId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int idCategory = resultSet.getInt("id_category");
-                int idProduct = resultSet.getInt("id_product");
+                int productId = resultSet.getInt("product_id");
                 String imagePath = resultSet.getString("image_path");
-                Image image = new Image(idCategory, idProduct, imagePath);
+                Image image = new Image(categoryId, productId, imagePath);
                 images.add(image);
             }
             connectionPool.closeConnection(connection);
@@ -82,19 +81,18 @@ public class ImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
-    public Image getImageByIdProduct(int idProduct) {
+    public Image getImageByIdProduct(int productId) {
         Image image = null;
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
             Connection connection = connectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(GET_IMAGE_BY_ID_PRODUCT);
-            preparedStatement.setInt(1, idProduct);
+            preparedStatement.setInt(1, productId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int idCategory = resultSet.getInt("id_category");
-                int productId = resultSet.getInt("id_product");
+                int categoryId = resultSet.getInt("category_id");
                 String imagePath = resultSet.getString("image_path");
-                image = new Image(idCategory, productId, imagePath);
+                image = new Image(categoryId, productId, imagePath);
             }
             connectionPool.closeConnection(connection);
         } catch (Exception exception) {
@@ -114,11 +112,22 @@ public class ImageRepositoryImpl implements ImageRepository {
                 preparedStatement.setInt(1, product.getId());
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
-                    int idCategory = resultSet.getInt("id_category");
-                    int idProduct = resultSet.getInt("id_product");
+                    int categoryId = resultSet.getInt("category_id");
+                    int productId = resultSet.getInt("product_id");
                     String imagePath = resultSet.getString("image_path");
-                    Image image = new Image(idCategory, idProduct, imagePath);
-                    images.add(image);
+                    Image image = new Image(categoryId, productId, imagePath);
+                    if (images.size() == 0) {
+                        images.add(image);
+                    }
+                    int count = 0;
+                    for (int i = 0; i < images.size(); i++) {
+                        if (!(images.get(i).getProductId() == image.getProductId())) {
+                            count++;
+                        }
+                        if (count == images.size()) {
+                            images.add(image);
+                        }
+                    }
                 }
             }
             connectionPool.closeConnection(connection);

@@ -22,7 +22,12 @@ public class RegisterCommand implements BaseCommand {
         String userPassword = request.getParameter("userpassword");
         String repeatPassword = request.getParameter("repeatpassword");
         if (userPassword.equals(repeatPassword)) {
-            User user = new User(userName, userLastName, userEmail, userPassword);
+            User user = User.builder()
+                    .name(userName)
+                    .lastName(userLastName)
+                    .email(userEmail)
+                    .password(userPassword)
+                    .build();
             if (!userRepository.checkUserFromBase(user)) {
                 userRepository.create(user);
             }

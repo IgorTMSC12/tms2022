@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-1">
                         <c:forEach items="${images}" var="image">
-                            <c:if test="${image.getIdProduct() == product.getId()}">
+                            <c:if test="${image.getProductId() == product.getId()}">
                                 <img style="width:100%; height:100%"
                                      src="${contextPath}/images/image_product/${image.getImagePath()}">
                             </c:if>

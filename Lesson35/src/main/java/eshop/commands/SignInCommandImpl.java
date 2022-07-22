@@ -36,7 +36,7 @@ public class SignInCommandImpl implements BaseCommand {
         } catch (RequestParamNullException e) {
             e.printStackTrace();
         }
-        User user = new User(email, password);
+        User user = User.builder().email(email).password(password).build();
         return checkReceivedUser(user, request);
     }
 

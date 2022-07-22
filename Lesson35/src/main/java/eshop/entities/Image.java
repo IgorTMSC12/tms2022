@@ -5,25 +5,25 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Image extends BaseEntity {
 
-    private int idCategory;
-    private int idProduct;
+    private int categoryId;
+    private int productId;
     private String imagePath;
 
-    public Image(int idCategory, int idProduct, String imagePath) {
-        this.idCategory = idCategory;
-        this.idProduct = idProduct;
+    public Image(int categoryId, int productId, String imagePath) {
+        this.categoryId = categoryId;
+        this.productId = productId;
         this.imagePath = imagePath;
     }
 
-    public int getIdProduct() {
-        return idProduct;
+    public int getProductId() {
+        return productId;
     }
 
     public String getImagePath() {
         return imagePath;
     }
 
-    public int getIdCategory() {
-        return idCategory;
+    public int getCategoryId() {
+        return categoryId;
     }
 }
