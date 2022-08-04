@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("/seearchh")
+@RequestMapping("/search")
 public class SearchController {
     private ProductServiceImpl productService;
 

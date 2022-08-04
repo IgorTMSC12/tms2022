@@ -22,7 +22,7 @@
         <li class="nav-item">
             <a class="nav-link" href="/cart">Корзина</a>
         </li>
-        <form method="get" class="form-inline" action="/seearchh">
+        <form method="get" class="form-inline" action="/search">
             <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search">
             <button class="btn btn-success" type="submit">Search</button>
         </form>

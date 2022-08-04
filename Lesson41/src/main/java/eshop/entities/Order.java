@@ -11,8 +11,8 @@ import java.util.List;
 public class Order extends BaseEntity {
 
     private int userId;
-    private int orderPrice;
-    private LocalDate orderData;
+    private int price;
+    private LocalDate date;
     private List<Product> products;
 
 }

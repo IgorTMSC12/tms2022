@@ -29,8 +29,4 @@ public class User extends BaseEntity {
     @Pattern(regexp = "\\s+", message = "Spaces are not allowed")
     private String password;
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
 }

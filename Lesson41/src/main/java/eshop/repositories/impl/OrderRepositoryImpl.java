@@ -27,8 +27,8 @@ public class OrderRepositoryImpl implements OrderRepository {
             Connection connection = connectionPool.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_ORDER);
             preparedStatement.setInt(1, entity.getUserId());
-            preparedStatement.setInt(2, entity.getOrderPrice());
-            preparedStatement.setObject(3, entity.getOrderData());
+            preparedStatement.setInt(2, entity.getPrice());
+            preparedStatement.setObject(3, entity.getDate());
             preparedStatement.executeUpdate();
             for (int i = 0; i < entity.getProducts().size(); i++) {
                 createOrderProduct(getOrderByIdUser(entity.getUserId()).getId(), entity.getProducts().get(i).getId());
@@ -86,8 +86,8 @@ public class OrderRepositoryImpl implements OrderRepository {
                 order = Order.builder()
                         .id(orderId)
                         .userId(userId)
-                        .orderPrice(orderPrice)
-                        .orderData(date)
+                        .price(orderPrice)
+                        .date(date)
                         .products(products)
                         .build();
             }
@@ -116,8 +116,8 @@ public class OrderRepositoryImpl implements OrderRepository {
                 Order order = Order.builder()
                         .id(orderId)
                         .userId(userId)
-                        .orderPrice(orderPrice)
-                        .orderData(date)
+                        .price(orderPrice)
+                        .date(date)
                         .products(products)
                         .build();
                 orders.add(order);
